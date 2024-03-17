@@ -1,0 +1,65 @@
+.login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    background-color: #9ef1a9; /* Light gray background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #c7054c; /* Purple border */
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0d0a36; /* Purple text color */
+  }
+  
+  .main {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .content {
+    width: 300px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px;
+    color: #160c29;
+    text-align: left;
+  }
+  
+  input {
+    
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #0a83ee; /* Light gray border */
+  }
+  
+  button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8a4fff; /* Purple button color */
+    color: #4dfe949b;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #6835b8; /* Darker purple on hover */
+  }
+  
+  button:active {
+    transform: translateY(1px);
+  }
