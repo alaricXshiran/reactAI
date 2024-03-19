@@ -1,38 +1,48 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .dashboard {
-    position: fixed; /* Fixed positioning */
-    top: 0; /* Stick to the top */
-    left: 0; /* Align to the left */
-    width: 100%;
-    background-color: #2c3e50; /* Dark background color */
-    color: #fff; /* Text color */
-    border-collapse: collapse;
-  }
-  
-  .dashboard th {
-    font-size: 24px;
-    padding: 20px;
-    text-align: center; /* Center-align the text */
-  }
-  
-  .dashboard td {
-    padding: 10px;
-  }
-  
-  .dashboard a {
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    color: #fff;
-    font-size: 18px;
-    text-align: center; /* Center-align the text */
-  }
-  
-  .dashboard a:hover {
-    background-color: #34495e; /* Darker background color on hover */
-  }
+.navigation-bar {
+  position:sticky; 
+  align-items: flex-start;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  background-color: #333; 
+  color: #fff; 
+  padding: 10px 20px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+  z-index: 1000; /* Ensures the navigation bar stays above other content */
+}
+.navigation-bar ul {
+  list-style-type: none; 
+  margin: 0; 
+  padding: 0; 
+  text-align: center; 
+}
+
+
+.navigation-bar ul li {
+  display: inline-block; /* Display the list items in a row */
+  margin-right: 20px; /* Add right margin between list items */
+}
+
+
+.navigation-bar ul li:last-child {
+  margin-right: 0; /* Remove margin from the last list item */
+}
+
+.navigation-bar ul li a {
+  text-decoration: none; /* Remove underline from links */
+  color: inherit; /* Inherit the text color from parent */
+  font-weight: bold; /* Bold font weight for emphasis */
+  transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+
+.navigation-bar ul li a:hover {
+  color: #3ef8ab; /* Change text color on hover (example: yellow) */
+}
+
+
+.logo {
+  height: 40px; /* Set height of the logo */
+  width: auto; /* Maintain aspect ratio */
+  vertical-align: middle; /* Align the logo vertically */
+}

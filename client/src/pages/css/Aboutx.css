@@ -1,0 +1,19 @@
+.about_doc {
+  background-color: #e2dbdb; 
+}
+.about_doc header {
+  background-color: #ddd8d8; 
+}
+.about_doc main {
+  background-color: #d8cece;
+  padding: 20px;
+}
+.about_doc section {
+  background-color: #fff8f8; 
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.about_doc footer {
+  background-color: #9c9a9a;
+  padding: 20px;
+}
