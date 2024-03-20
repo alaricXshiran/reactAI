@@ -23,14 +23,11 @@ export default function Navbar() {
       <Link to='/Home'><img src={logo_law} alt="" className='logo' /></Link>
       <ul>
         <li><Link to='/Home'>What's New?</Link></li>
-        <li><Link to='/Register'>Register</Link></li>
+       
 
-        
+
         <li> <Link to='/Aboutx'>About Us</Link></li>
-            <li><a href="https://www.facebook.com/YourPage" target="_blank"><img src={facebook} alt="" className='logox' /></a></li>
-            <li><a href="https://twitter.com/YourUsername" target="_blank"><img src={xx} alt="" className='logox' /></a></li>
-            <li><a href="https://www.instagram.com/YourUsername" target="_blank"><img src={instagram} alt="" className='logox' /></a></li>
-            <li><a href="https://www.youtube.com/YourUsername" target="_blank"><img src={youtube} alt="" className='logox' /></a></li>
+
         {isUserSignedIn ? (
           <>
             <li><Link to='/Chatx'>Chat</Link></li>
@@ -38,9 +35,14 @@ export default function Navbar() {
           </>
         ) : (
           <>
+           <li><Link to='/Register'>Register</Link></li>
             <li> <Link to='/Login'>Login</Link></li>
           </>
         )}
+        <li><a href="https://www.facebook.com/YourPage" target="_blank"><img src={facebook} alt="" className='logox' /></a></li>
+        <li><a href="https://twitter.com/YourUsername" target="_blank"><img src={xx} alt="" className='logox' /></a></li>
+        <li><a href="https://www.instagram.com/YourUsername" target="_blank"><img src={instagram} alt="" className='logox' /></a></li>
+        <li><a href="https://www.youtube.com/YourUsername" target="_blank"><img src={youtube} alt="" className='logox' /></a></li>
       </ul>
     </nav>
   )
