@@ -36,11 +36,11 @@ export default function Register() {
   }
 
   return (
-    <div class="login-form">
-      <div class="container">
+    <div className="login-form">
+      <div className="container">
         <h1>Register Account</h1>
-        <div class="main">
-          <div class="content">
+        <div className="main">
+          <div className="content">
             <form onSubmit={registerUser}>
               <label>Name</label>
               <input type='text' placeholder='Enter name...' value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })} required />
