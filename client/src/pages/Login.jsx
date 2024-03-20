@@ -40,7 +40,7 @@ export default function Login() {
 
     <div class="login-form">
     <div class="container">
-      <h1>Register Account</h1>
+      <h1>Login Account</h1>
       <div class="main">
         <div class="content">
         <form onSubmit={loginUser}>
