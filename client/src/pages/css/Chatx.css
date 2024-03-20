@@ -1,0 +1,34 @@
+/* Chat container styling */
+.chat_container {
+    background-color: #f0f0f0; /* Example background color */
+    border: 1px solid #ccc; /* Example border */
+    padding: 20px; /* Example padding */
+    margin: 20px auto; /* Example margin */
+    max-width: 600px; /* Example maximum width */
+  }
+  
+  /* Heading 1 styling */
+  .chat_container h1 {
+    font-size: 24px; /* Example font size */
+    color: #333; /* Example font color */
+  }
+  
+  /* Heading 2 styling */
+  .chat_container h2 {
+    font-size: 20px; /* Example font size */
+    color: #666; /* Example font color */
+  }
+  
+  /* Heading 3 styling */
+  .chat_container h3 {
+    font-size: 16px; /* Example font size */
+    color: #999; /* Example font color */
+  }
+  
+  /* Example media query for responsiveness */
+  @media screen and (max-width: 768px) {
+    .chat_container {
+      max-width: 100%; /* Adjust maximum width for smaller screens */
+      padding: 10px; /* Adjust padding for smaller screens */
+    }
+  }

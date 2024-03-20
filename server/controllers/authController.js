@@ -102,5 +102,6 @@ module.exports ={
     test,
     registerUser,
     loginUser,
-    getProfile
+    getProfile,
+ 
 }

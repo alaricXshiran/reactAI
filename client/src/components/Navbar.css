@@ -42,6 +42,11 @@
 
 
 .logo {
+  height: 90px; /* Set height of the logo */
+  width: auto; /* Maintain aspect ratio */
+  vertical-align: middle; /* Align the logo vertically */
+}
+.logox {
   height: 40px; /* Set height of the logo */
   width: auto; /* Maintain aspect ratio */
   vertical-align: middle; /* Align the logo vertically */

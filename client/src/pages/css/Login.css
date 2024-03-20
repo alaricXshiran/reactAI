@@ -33,12 +33,6 @@
     flex-direction: column;
   }
   
-  label {
-    margin-bottom: 5px;
-    color: #160c29;
-    text-align: left;
-  }
-  
   input {
     
     padding: 10px;
@@ -52,7 +46,7 @@
     border: none;
     border-radius: 5px;
     background-color: #8a4fff; /* Purple button color */
-    color: #2c2c2c9b;
+    color: #020202;
     cursor: pointer;
   }
   

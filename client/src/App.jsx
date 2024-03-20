@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Chatx from './pages/Chatx'
 import Aboutx from './pages/Aboutx'
+import Admin from './pages/Admin'
 import axios from 'axios'
 import { Toaster } from 'react-hot-toast'
 import { UserContextProvider } from '../context/userContext';
@@ -17,7 +18,9 @@ axios.defaults.withCredentials = true
 
 function App() {
   
+  
 const isUserSignedIn=!!localStorage.getItem('token')
+
   return (
     <UserContextProvider>
       <Navbar />
@@ -27,6 +30,8 @@ const isUserSignedIn=!!localStorage.getItem('token')
         <Route path='/Login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
         <Route path='/Aboutx' element={<Aboutx />} />
+        <Route path='/Aboutx' element={<Admin />} />
+        
         {isUserSignedIn && <Route path='/Chatx' element={<Chatx />} />}
       </Routes>
     </UserContextProvider>

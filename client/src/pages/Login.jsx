@@ -48,7 +48,7 @@ export default function Login() {
       <input type='text' placeholder='Email' value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} required />
       <label>Password</label>
       <input type='password' placeholder='Password' value={data.password} onChange={(e) => setData({ ...data, password: e.target.value })} required />
-      <label> Reminder add hidden input to stop bots</label>
+      
       <button type='submit'>LOGIN</button>
     </form>
         </div>
