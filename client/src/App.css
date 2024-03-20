@@ -1,6 +1,7 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #8f8f8f;
+  background-image: url('./assets/imgs/bcpic.jpg');
+  background-size: cover;
   margin: 0;
   padding: 0;
 }
