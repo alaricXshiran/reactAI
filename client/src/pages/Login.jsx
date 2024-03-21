@@ -1,13 +1,22 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useContext, useState } from 'react';
+
 import axios from 'axios'
 import {toast} from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'
 import './css/Login.css'
+import Cookies from 'js-cookie';
+
+import { UserContext } from '../../context/userContext';
+
+
+
+
+
 
 export default function Login() {
   const navigate = useNavigate()
-
+  const { user, setUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -15,6 +24,12 @@ export default function Login() {
 
   const loginUser = async (e) => {
     e.preventDefault()
+
+    Cookies.remove('token')
+    localStorage.removeItem('token')
+
+   
+  
 
     const { email, password } = data
     try {
@@ -27,8 +42,24 @@ export default function Login() {
         navigate('/Register')
       } else {
         setData({});
+        axios.get('/profile')
+        .then(({ data }) => {
+          setUser(data);
+        })
+        .catch(error => {
+          console.error('Error refreshing user data:', error);
+        })
+        .finally(() => {
+         
+        });
         localStorage.setItem('token',data.password)//create the token on local storage
-        navigate('/Chatx')
+        
+        if(data.roll=="admin"){
+          navigate('/Admin')
+        }else{
+          navigate('/Chatx')
+        }
+        
       }
     } catch (error) {
       console.log(error);

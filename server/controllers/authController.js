@@ -42,7 +42,8 @@ const registerUser=async (req,res)=>{
         const user = await User.create({
             name,
             email,
-            password:hashedPassword
+            password:hashedPassword,
+            roll:"user"
         });
 
         return res.json(user)
@@ -66,7 +67,7 @@ const loginUser=async(req,res)=>{
         //check if Password and hashedpassword in DB
         const match=await comparePassword(password,user.password)
         if(match){
-            jwt.sign({email:user.email, id:user._id,name: user.name},process.env.JWT_SECRET,{},(err,token)=>{
+            jwt.sign({email:user.email, id:user._id,name: user.name,roll: user.roll},process.env.JWT_SECRET,{},(err,token)=>{
                 if(err){
                     throw err;
                 }

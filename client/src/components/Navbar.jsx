@@ -1,23 +1,27 @@
 import { Link, useNavigate } from 'react-router-dom'
 import '../components/Navbar.css'
-
+import React from 'react'
 import logo_law from '../assets/imgs/law.png'
 import facebook from '../assets/imgs/facebook.png'
 import xx from '../assets/imgs/xx.png'
 import youtube from '../assets/imgs/youtube.png'
 import instagram from '../assets/imgs/instagram.png'
+import Cookies from 'js-cookie';
+
+
 
 export default function Navbar() {
-
+  
   const isUserSignedIn = !!localStorage.getItem('token')
 
   const navigate = useNavigate();
 
   const handleSignOut = () => {
+    Cookies.remove('token');
     localStorage.removeItem('token')
     navigate('/login')
   }
-
+ 
   return (
     <nav className='navigation-bar'>
       <Link to='/Home'><img src={logo_law} alt="" className='logo' /></Link>

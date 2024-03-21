@@ -30,7 +30,7 @@ const isUserSignedIn=!!localStorage.getItem('token')
         <Route path='/Login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
         <Route path='/Aboutx' element={<Aboutx />} />
-        <Route path='/Aboutx' element={<Admin />} />
+        <Route path='/Admin' element={<Admin />} />
         <Route path='/Chatx' element={<Chatx />} />
 
         {isUserSignedIn && <Route path='/Chatx' element={<Chatx />} />}

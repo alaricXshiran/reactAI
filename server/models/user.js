@@ -9,6 +9,9 @@ const userSchema=new Schema({
         unique: true
     },
     password: String,
+    roll:{
+        type: String,
+    },
 
     
 
