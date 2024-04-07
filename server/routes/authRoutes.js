@@ -14,11 +14,11 @@ router.use(
 
 router.get('/', test)
 
-router.post('/register', registerUser)
+router.post('/register', registerUser)//register Users
 
-router.post('/login', loginUser)
+router.post('/login', loginUser)//login users
 
-router.get('/profile', getProfile)
+router.get('/profile', getProfile)//get the user Profile
 
 
 module.exports = router

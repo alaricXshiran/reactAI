@@ -1,18 +1,37 @@
 import React from 'react'
-import {useContext} from 'react'
+import { useContext } from 'react'
 import { UserContext } from '../../context/userContext'
-
-import './css/Admin.css'
+import { useNavigate } from 'react-router-dom'
 export default function Admin() {
-  const {user}=useContext(UserContext)
-  
+  const { user } = useContext(UserContext)
+  const navigate = useNavigate()
+
+
+  const moveTo1 = () => {
+    navigate('/Userdelx')
+  }
+  const moveTo2 = () => {
+    navigate('/Doxman')
+  }
+
+
   return (
-   
+
     <div className="chat_container">
       <h1>Admin</h1>
-      <h2>Welcome to the ADMIN {user.name}</h2>
+      <h2>Welcome {user.name}</h2>
       {user.email}
-      <h3>What is ur roll: {user.roll}</h3>
+      <h3>RANK: {user.roll}</h3>
+      <div className='nav_container'>
+        <ul>
+          <li><button onClick={moveTo1}>Manage USERS</button></li>
+          <li><button onClick={moveTo2}>Manage Documents</button></li>
+
+
+        </ul>
+
+      </div>
+
     </div>
 
   )

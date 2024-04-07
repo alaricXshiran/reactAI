@@ -8,6 +8,8 @@ import Register from './pages/Register'
 import Chatx from './pages/Chatx'
 import Aboutx from './pages/Aboutx'
 import Admin from './pages/Admin'
+import Userdelx from './pages/Userdelx'
+import Doxman from './pages/Doxman'
 import axios from 'axios'
 import { Toaster } from 'react-hot-toast'
 import { UserContextProvider } from '../context/userContext';
@@ -17,7 +19,6 @@ axios.defaults.withCredentials = true
 
 
 function App() {
-  
   
 const isUserSignedIn=!!localStorage.getItem('token')
 
@@ -32,6 +33,8 @@ const isUserSignedIn=!!localStorage.getItem('token')
         <Route path='/Aboutx' element={<Aboutx />} />
         <Route path='/Admin' element={<Admin />} />
         <Route path='/Chatx' element={<Chatx />} />
+        <Route path='/Userdelx' element={<Userdelx />} />
+        <Route path='/Doxman' element={<Doxman />} />
 
         {isUserSignedIn && <Route path='/Chatx' element={<Chatx />} />}
       </Routes>
