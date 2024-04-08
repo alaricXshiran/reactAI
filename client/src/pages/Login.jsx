@@ -49,9 +49,6 @@ export default function Login() {
         .catch(error => {
           console.error('Error refreshing user data:', error);
         })
-        .finally(() => {
-         
-        });
         localStorage.setItem('token',data.password)//create the token on local storage
         
         if(data.roll=="admin"){

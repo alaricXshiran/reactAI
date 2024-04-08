@@ -1,5 +1,6 @@
+
 const express=require('express');
-const dotenv=require('dotenv').config()
+require('dotenv').config()
 const cors=require('cors')
 const {mongoose}=require('mongoose')
 const app = express();
@@ -19,5 +20,5 @@ app.use(express.urlencoded({extended:false}))
 
 app.use('/', require('./routes/authRoutes'))
 
-const port=8000;
-app.listen(port, () => console.log(`Server is running on port ${port}`))
+const port=process.env.PORT
+app.listen(port, () => console.log(`Server  is running on port ${port}`))

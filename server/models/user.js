@@ -11,12 +11,8 @@ const userSchema=new Schema({
     password: String,
     roll:{
         type: String,
-    },
-
-    
-
-
-})
+    }
+},{timestamps:true})
 
 const UserModel=mongoose.model('User',userSchema);
 

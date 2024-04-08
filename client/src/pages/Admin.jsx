@@ -3,10 +3,10 @@ import { useContext } from 'react'
 import { UserContext } from '../../context/userContext'
 import { useNavigate } from 'react-router-dom'
 export default function Admin() {
+
+
   const { user } = useContext(UserContext)
   const navigate = useNavigate()
-
-
   const moveTo1 = () => {
     navigate('/Userdelx')
   }
