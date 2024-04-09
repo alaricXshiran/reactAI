@@ -111,10 +111,18 @@ const getProfile = (req, res) => {
 
 }
 
+//create user lists
+const getUlists=async(req,res)=>{
+    const users=await User.find({}).sort({createdAt:-1})
+    res.status(200).json(users)
+
+}
+
 module.exports = {
     test,
     registerUser,
     loginUser,
     getProfile,
+    getUlists,
 
 }

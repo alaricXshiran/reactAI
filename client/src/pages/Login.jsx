@@ -15,8 +15,8 @@ import { UserContext } from '../../context/userContext';
 
 export default function Login() {
   const navigate = useNavigate()
-  const { user, setUser } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useContext(UserContext);
+
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -39,23 +39,30 @@ export default function Login() {
       });
       if(data.error) {
         toast.error(data.error)
+        Cookies.remove('token')
+        localStorage.removeItem('token')
         navigate('/Register')
       } else {
         setData({});
         axios.get('/profile')
         .then(({ data }) => {
           setUser(data);
+          console.log(data)
+
+          if(data.roll=="admin"){
+            navigate('/Admin')
+          }else{
+            navigate('/Chatx')
+          }
         })
         .catch(error => {
-          console.error('Error refreshing user data:', error);
+          console.error('Error refreshing user data:');
+          Cookies.remove('token')
+          localStorage.removeItem('token')
         })
         localStorage.setItem('token',data.password)//create the token on local storage
         
-        if(data.roll=="admin"){
-          navigate('/Admin')
-        }else{
-          navigate('/Chatx')
-        }
+        
         
       }
     } catch (error) {
