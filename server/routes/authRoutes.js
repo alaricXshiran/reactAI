@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
-const { test, registerUser, loginUser, getProfile, getUlists } = require('../controllers/authController')
+const { test, registerUser, loginUser, getProfile, getUlists, delUser, upUser } = require('../controllers/authController')
 
 
 // middleware
@@ -20,7 +20,11 @@ router.post('/login', loginUser)//login users
 
 router.get('/profile', getProfile)//get the user Profile
 
-router.get('/userList', getUlists)//get all the users
+router.get('/ulists', getUlists)//get all the users
+
+router.delete('/:id', delUser)//Delete a user
+
+router.patch('/:id', upUser)//Update a user
 
 
 module.exports = router

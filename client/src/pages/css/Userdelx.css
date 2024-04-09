@@ -1,0 +1,32 @@
+
+  
+ /* CSS for the chat container */
+.users_container {
+    margin: 20px;
+    text-align: center;
+    
+  }
+  
+  /* CSS for the users table */
+  .users_table {
+    width: 100%;
+    border-collapse: collapse;
+    color:rgb(243, 230, 213)
+  }
+  
+  .users_table th, .users_table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #b007ff;
+  }
+  
+  .users_table th {
+    background-color: #9033fa;
+  }
+  
+  .users_table tr{
+    background-color: #4f645f;
+  }
+  .users_table tr:hover {
+    background-color: #685dfc;
+  }

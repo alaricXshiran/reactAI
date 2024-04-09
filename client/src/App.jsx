@@ -27,7 +27,7 @@ const isUserSignedIn=!!localStorage.getItem('token')
       <Navbar />
       <Toaster position='bottom-right' toastOptions={{ duration: 2000 }} />
       <Routes>
-        <Route path='/Home' element={<Home />} />
+        <Route path='/' element={<Home />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
         <Route path='/Aboutx' element={<Aboutx />} />

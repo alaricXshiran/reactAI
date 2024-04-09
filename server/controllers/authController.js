@@ -2,6 +2,8 @@ const User = require('../models/user')
 const { hashPassword, comparePassword } = require('../helpers/auth')
 const jwt = require('jsonwebtoken');
 
+const Mongoose = require('mongoose');
+
 
 
 
@@ -75,7 +77,7 @@ const loginUser = async (req, res) => {
                     res.cookie('token', token).json(user)
                 })
             }
-            else{
+            else {
                 return res.json({
                     error: 'Check your Password, Are you sure you have an Account'
                 });
@@ -112,11 +114,43 @@ const getProfile = (req, res) => {
 }
 
 //create user lists
-const getUlists=async(req,res)=>{
-    const users=await User.find({}).sort({createdAt:-1})
+const getUlists = async (req, res) => {
+    const users = await User.find({}).sort({ createdAt: -1 })
     res.status(200).json(users)
 
 }
+
+//delete a user
+const delUser = async (req, res) => {
+    const { id } = req.params
+
+    if (!Mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'User does not Exist' })
+    }
+    const deletedUser = await User.findOneAndDelete({ _id: id });
+    if (!deletedUser) {
+        return res.status(400).json({ error: 'No such Users' })
+    }
+    res.status(200).json(deletedUser)
+}
+
+//update a user
+const upUser = async (req, res) => {
+    const { id } = req.params
+
+    if (!Mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'User does not Exist' })
+    }
+    const updatedUser = await User.findOneAndUpdate({ _id: id }, {
+        ...req.body
+    })
+    if (!updatedUser) {
+        return res.status(400).json({ error: 'No such Users' })
+    }
+
+    res.status(200).json(updatedUser)
+}
+
 
 module.exports = {
     test,
@@ -124,5 +158,8 @@ module.exports = {
     loginUser,
     getProfile,
     getUlists,
+    delUser,
+    upUser,
+
 
 }
