@@ -2,7 +2,7 @@ const User = require('../models/user')
 const { hashPassword, comparePassword } = require('../helpers/auth')
 const jwt = require('jsonwebtoken');
 
-const Mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 
 
@@ -115,23 +115,34 @@ const getProfile = (req, res) => {
 
 //create user lists
 const getUlists = async (req, res) => {
-    const users = await User.find({}).sort({ createdAt: -1 })
+    try {
+        const users = await User.find({}).sort({ createdAt: -1 })
     res.status(200).json(users)
-
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
 }
 
 //delete a user
 const delUser = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
 
-    if (!Mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'User does not Exist' })
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Invalid User ID' });
     }
-    const deletedUser = await User.findOneAndDelete({ _id: id });
-    if (!deletedUser) {
-        return res.status(400).json({ error: 'No such Users' })
+
+    try {
+        const deletedUser = await User.findOneAndDelete({ _id: id });
+        
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        res.status(200).json(deletedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
     }
-    res.status(200).json(deletedUser)
 }
 
 //update a user

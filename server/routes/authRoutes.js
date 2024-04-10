@@ -22,9 +22,9 @@ router.get('/profile', getProfile)//get the user Profile
 
 router.get('/ulists', getUlists)//get all the users
 
-router.delete('/:id', delUser)//Delete a user
+router.delete('/del/:id', delUser)//Delete a user
 
-router.patch('/:id', upUser)//Update a user
+router.patch('/up/:id', upUser)//Update a user
 
 
 module.exports = router
