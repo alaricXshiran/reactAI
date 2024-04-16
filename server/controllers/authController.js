@@ -1,8 +1,11 @@
-const User = require('../models/user')
-const { hashPassword, comparePassword } = require('../helpers/auth')
-const jwt = require('jsonwebtoken');
-
+const express = require('express');
+const router = express.Router();
+const cors = require('cors');
+const multer = require('multer');
 const mongoose = require('mongoose');
+const User = require('../models/user');
+const { hashPassword, comparePassword } = require('../helpers/auth');
+const jwt = require('jsonwebtoken');
 
 
 
@@ -162,6 +165,35 @@ const upUser = async (req, res) => {
     res.status(200).json(updatedUser)
 }
 
+//upload file
+// Multer configuration for file upload
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        
+        cb(null,Date.now()+ '-' + file.originalname); 
+    }
+});
+
+const upload = multer({ storage });
+
+// Middleware for handling file upload
+const storagex = upload.single('file');
+
+// Controller function to handle file upload
+const upFile = async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
+    const { filename } = req.body; // Get filename from request body
+    const uploadedFile = req.file;
+    res.status(200).json({ message: 'File uploaded successfully', file: uploadedFile });
+};
+
+//view files
+
 
 module.exports = {
     test,
@@ -171,6 +203,6 @@ module.exports = {
     getUlists,
     delUser,
     upUser,
-
-
+    upFile,
+    storagex,
 }

@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
-const { test, registerUser, loginUser, getProfile, getUlists, delUser, upUser } = require('../controllers/authController')
+const { test, registerUser, loginUser, getProfile, getUlists, delUser, upUser,upFile,storagex, } = require('../controllers/authController')
+
+
 
 
 // middleware
@@ -26,5 +28,10 @@ router.delete('/del/:id', delUser)//Delete a user
 
 router.patch('/up/:id', upUser)//Update a user
 
+router.post('/upload', storagex,upFile); // Upload single file
+
+router.get('/files', (req, res) => {
+    
+});
 
 module.exports = router

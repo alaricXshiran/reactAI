@@ -79,7 +79,7 @@ export default function Userdelx() {
         <tbody>
           {filteredUsers &&
             filteredUsers.map((user) => (
-              <tr key={user.id}>
+              <tr key={user._id}>
                 <td>{user._id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
