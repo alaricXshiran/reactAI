@@ -8,6 +8,9 @@ const { hashPassword, comparePassword } = require('../helpers/auth');
 const jwt = require('jsonwebtoken');
 
 
+require('../models/pdfDetails');
+const pdfSchema = mongoose.model("PdfDetails")
+
 
 
 const test = (req, res) => {
@@ -120,7 +123,7 @@ const getProfile = (req, res) => {
 const getUlists = async (req, res) => {
     try {
         const users = await User.find({}).sort({ createdAt: -1 })
-    res.status(200).json(users)
+        res.status(200).json(users)
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }
@@ -136,11 +139,11 @@ const delUser = async (req, res) => {
 
     try {
         const deletedUser = await User.findOneAndDelete({ _id: id });
-        
+
         if (!deletedUser) {
             return res.status(404).json({ error: 'User not found' });
         }
-        
+
         res.status(200).json(deletedUser);
     } catch (error) {
         console.error(error);
@@ -172,8 +175,8 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-        
-        cb(null,Date.now()+ '-' + file.originalname); 
+        const uniqueSuffix = Date.now()
+        cb(null, uniqueSuffix+file.originalname);
     }
 });
 
@@ -185,14 +188,36 @@ const storagex = upload.single('file');
 // Controller function to handle file upload
 const upFile = async (req, res) => {
     if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' });
+      return res.status(400).json({ error: 'No file uploaded' });
     }
-    const { filename } = req.body; // Get filename from request body
+  
     const uploadedFile = req.file;
-    res.status(200).json({ message: 'File uploaded successfully', file: uploadedFile });
-};
+    const filename = req.body.filename; // title of the file
+    const newFilename = uploadedFile.filename; // original file name
+  
+    try {
+      // Save the file details to the database
+      await pdfSchema.create({ title: filename, pdf: newFilename });
+      // Send a success response to the client
+      res.status(200).json({ message: 'File uploaded successfully', file: uploadedFile });
+    } catch (error) {
+      // Handle any errors that occur during file upload or database operation
+      console.error('Error uploading file:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  };
 
-//view files
+//get files
+
+const getfiles=async(req,res)=>{
+try {
+    pdfSchema.find({}).then(data=>{
+        res.json({status:200 ,data:data})
+    })
+} catch (error) {
+    console.log(error)
+}
+}
 
 
 module.exports = {
@@ -205,4 +230,5 @@ module.exports = {
     upUser,
     upFile,
     storagex,
+    getfiles,
 }

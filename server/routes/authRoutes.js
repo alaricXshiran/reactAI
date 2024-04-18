@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
-const { test, registerUser, loginUser, getProfile, getUlists, delUser, upUser,upFile,storagex, } = require('../controllers/authController')
-
+const { test, registerUser, loginUser, getProfile, getUlists, delUser, upUser,upFile,storagex,getfiles, } = require('../controllers/authController')
+const mongoose = require('mongoose');
 
 
 
@@ -13,6 +13,7 @@ router.use(
         origin: 'http://localhost:5173'
     })
 )
+router.use("/uploads",express.static('uploads'))
 
 router.get('/', test)
 
@@ -30,8 +31,6 @@ router.patch('/up/:id', upUser)//Update a user
 
 router.post('/upload', storagex,upFile); // Upload single file
 
-router.get('/files', (req, res) => {
-    
-});
+router.get('/getfiles',getfiles);
 
 module.exports = router

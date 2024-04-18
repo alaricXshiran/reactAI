@@ -11,6 +11,7 @@ import Admin from './pages/Admin'
 import Userdelx from './pages/Userdelx'
 import Doxman from './pages/Doxman'
 import ReviewForm from './pages/ReviewForm'
+import PdfPage from './pages/PdfPage';
 import axios from 'axios'
 import { Toaster } from 'react-hot-toast'
 import { UserContextProvider } from '../context/userContext';
@@ -38,6 +39,7 @@ function App() {
         <Route path='/Userdelx' element={<Userdelx />} />
         <Route path='/Doxman' element={<Doxman />} />
         <Route path='/ReviewForm' element={<ReviewForm />} />
+        <Route path='/PdfPage' element={<PdfPage />} />
 
         {isUserSignedIn && <Route path='/Chatx' element={<Chatx />} />}
       </Routes>
