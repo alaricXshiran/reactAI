@@ -3,6 +3,7 @@ import { UserContext } from '../../context/userContext';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 import './css/Doxman.css'
+import PdfPage from './PdfPage';
 
 export default function Doxman() {
   const { user } = useContext(UserContext);
@@ -16,6 +17,7 @@ export default function Doxman() {
   const [allImage, setAllImage] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [rerender, setRerender] = useState(false);
+  const [selectedPdf, setSelectedPdf] = useState(null); // State to hold selected PDF
 
   useEffect(() => {
     getPdf();
@@ -31,14 +33,13 @@ export default function Doxman() {
   }
   const showPdf = async (pdfFileName) => {
     try {
-      const response = await axios.get(`http://localhost:8000/uploads/${pdfFileName}`);
-      return{
-        response
-      }
-     
+      const response = await axios.get(`http://localhost:8000/uploads/${pdfFileName}`, {
+        responseType: 'arraybuffer'
+      });
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      setSelectedPdf(URL.createObjectURL(blob)); // Set selected PDF as object URL
     } catch (error) {
       console.error('Error fetching PDF:', error);
-      
     }
   };
 
@@ -99,51 +100,56 @@ export default function Doxman() {
   };
 
   return (
-    <div className="chat_container">
-      <button onClick={moveToAdmin}>Back To Admin</button>
-      <h1>Manage Documents</h1>
-      <h2>Welcome Admin {user && user.name ? user.name : ""}</h2>
-      <form className='input-files'>
-        <input type="file"
-          onChange={handleFileChange}
-          disabled={uploading}
-          required
-          ref={fileInputRef} // Attach ref to file input element
-        />
-        <input
-          type="text"
-          value={filename}
-          onChange={handleFilenameChange}
-          placeholder="Enter TITLE"
-          disabled={uploading}
-          required
-        />
-        <button onClick={handleUpload} disabled={uploading}>
-          <h3>{uploading ? 'Uploading...' : 'Upload File'}</h3>
-        </button>
-      </form>
-      <div>{uploadStatus}</div>
+    <div>
+      <div className="chat_container">
+        <button onClick={moveToAdmin}>Back To Admin</button>
+        <h1>Manage Documents</h1>
+        <h2>Welcome Admin {user && user.name ? user.name : ""}</h2>
+        <form className='input-files'>
+          <input type="file"
+            onChange={handleFileChange}
+            disabled={uploading}
+            required
+            ref={fileInputRef} // Attach ref to file input element
+          />
+          <input
+            type="text"
+            value={filename}
+            onChange={handleFilenameChange}
+            placeholder="Enter TITLE"
+            disabled={uploading}
+            required
+          />
+          <button onClick={handleUpload} disabled={uploading}>
+            <h3>{uploading ? 'Uploading...' : 'Upload File'}</h3>
+          </button>
+        </form>
+        <div>{uploadStatus}</div>
 
-      <form className='view-files'>
-        <input
-          type="text"
-          placeholder="Search Documents"
-          value={searchTerm}
-          onChange={handleSearch}
-          className="search-input"
-        />
-        <div className='view-box'>
-          {allImage && allImage.length > 0 && allImage
-            .filter(data => data && data.title && data.title.toLowerCase().includes(searchTerm.toLowerCase()))
-            .map((data, index) => (
-              <div className='document-item' key={index}>
-                <button className="document-button" onClick={() => showPdf(data.pdf)}>
-                  <h6>{data.title}</h6>
-                </button>
-              </div>
-            ))}
+        <div className='pdf-container'>
+          <PdfPage selectedPdf={selectedPdf} />
         </div>
-      </form>
+        <form className='view-files'>
+          <input
+            type="text"
+            placeholder="Search Documents"
+            value={searchTerm}
+            onChange={handleSearch}
+            className="search-input"
+          />
+          <div className='view-box'>
+            {allImage && allImage.length > 0 && allImage
+              .filter(data => data && data.title && data.title.toLowerCase().includes(searchTerm.toLowerCase()))
+              .map((data, index) => (
+                <div className='document-item' key={index}>
+                  <button className="document-button" onClick={() => showPdf(data.pdf)}>
+                    <h6>{data.title}</h6>
+                  </button>
+                </div>
+              ))}
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

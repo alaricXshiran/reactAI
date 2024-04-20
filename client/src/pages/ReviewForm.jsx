@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../context/userContext'; // Import UserContext
+import { UserContext } from '../../context/userContext';
 
 export default function ReviewForm() {
   const { user } = useContext(UserContext);
@@ -13,21 +13,19 @@ export default function ReviewForm() {
   return (
     <div className="chat_container">
       {user && (
-  <>
-    <h2>Welcome To REWIEW Help us make this better {user.name}</h2>
-    {user.email}
-    <h3>RANK: {user.roll}</h3>
-    <h2>Welcome To REWIEW Help us make this better {user.name}</h2>
-      <div className="nav_container">
-        <ul>
-          <li>
-            <button onClick={moveTo1}> back to CHAT</button>
-          </li>
-        </ul>
-      </div>
-  </>
-)}
-      
+        <div>
+          <h2>Welcome To REWIEW Help us make this better {user.name}</h2>
+          <h3>Email: {user.email}</h3>
+          <h4>RANK: {user.roll}</h4>
+          <div className="nav_container">
+            <ul>
+              <li>
+                <button onClick={moveTo1}>Back to CHAT</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

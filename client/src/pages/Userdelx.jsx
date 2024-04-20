@@ -7,7 +7,8 @@ export default function Userdelx() {
   const { user } = useContext(UserContext);
   const [users, setUsers] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -25,7 +26,6 @@ export default function Userdelx() {
     fetchUsers();
   }, []);
 
-  const navigate = useNavigate();
   const moveTo = () => {
     navigate('/Admin');
   };
@@ -53,6 +53,13 @@ export default function Userdelx() {
       console.error('An error occurred:', error);
     }
   };
+
+  // Check if user is not an admin, then navigate to '/Admin'
+  useEffect(() => {
+    if (user && user.roll !== 'admin') {
+      navigate('/Admin');
+    }
+  }, [user, navigate]);
 
   return (
     <div className="users_container">
