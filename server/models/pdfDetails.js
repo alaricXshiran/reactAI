@@ -10,4 +10,4 @@ const pdfDetailsSchema=new mongoose.Schema({
 
 },{collection:"PdfDetails"})
 
-mongoose.model("PdfDetails",pdfDetailsSchema) 
+mongoose.model("PdfDetails",pdfDetailsSchema)  

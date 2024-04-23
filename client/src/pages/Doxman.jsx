@@ -71,7 +71,7 @@ export default function Doxman() {
       const response = await axios.post('http://localhost:8000/upload', formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log(response);
+     
   
       setUploadStatus(response.data.message);
   

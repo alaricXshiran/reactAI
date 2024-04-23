@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
-const { test, registerUser, loginUser, getProfile, getUlists, delUser, upUser,upFile,storagex,getfiles, } = require('../controllers/authController')
-const mongoose = require('mongoose');
+const {  getProfile, getUlists, delUser, upUser,upFile,storagex,getfiles,aiChat } = require('../controllers/authController')
 
 
 
@@ -15,11 +14,7 @@ router.use(
 )
 router.use("/uploads",express.static('uploads'))
 
-router.get('/', test)
-
-router.post('/register', registerUser)//register Users
-
-router.post('/login', loginUser)//login users
+router.post("/gemini",aiChat)// gemini AI Chatx
 
 router.get('/profile', getProfile)//get the user Profile
 

@@ -1,34 +1,77 @@
-/* Chat container styling */
-.chat_container {
-    background-color: #f0f0f0; /* Example background color */
-    border: 1px solid #ccc; /* Example border */
-    padding: 20px; /* Example padding */
-    margin: 20px auto; /* Example margin */
-    max-width: 600px; /* Example maximum width */
-  }
-  
-  /* Heading 1 styling */
-  .chat_container h1 {
-    font-size: 24px; /* Example font size */
-    color: #333; /* Example font color */
-  }
-  
-  /* Heading 2 styling */
-  .chat_container h2 {
-    font-size: 20px; /* Example font size */
-    color: #666; /* Example font color */
-  }
-  
-  /* Heading 3 styling */
-  .chat_container h3 {
-    font-size: 16px; /* Example font size */
-    color: #999; /* Example font color */
-  }
-  
-  /* Example media query for responsiveness */
-  @media screen and (max-width: 768px) {
-    .chat_container {
-      max-width: 100%; /* Adjust maximum width for smaller screens */
-      padding: 10px; /* Adjust padding for smaller screens */
-    }
-  }
+
+
+/* Global styles */
+.body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #343a40;
+}
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-history {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+textarea {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  resize: none;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+
+.error {
+  color: #dc3545;
+  margin-top: 10px;
+}
+
+.message {
+  margin-bottom: 10px;
+}
+
+.user-message {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.bot-message {
+  background-color: #a560ff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.message-gap {
+  height: 10px;
+}

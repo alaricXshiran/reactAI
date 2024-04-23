@@ -6,7 +6,7 @@ import facebook from '../assets/imgs/facebook.png'
 import xx from '../assets/imgs/xx.png'
 import youtube from '../assets/imgs/youtube.png'
 import instagram from '../assets/imgs/instagram.png'
-import Cookies from 'js-cookie';
+
 
 
 
@@ -17,9 +17,9 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    Cookies.remove('token');
-    localStorage.removeItem('token')
-    navigate('/login')
+    localStorage.removeItem("token");
+    navigate('/Home')
+    window.location.reload();
   }
  
   return (

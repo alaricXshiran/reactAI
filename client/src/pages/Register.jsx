@@ -1,59 +1,96 @@
-import React from 'react'
-import { useState } from 'react'
-import './css/Register.css'
-import axios from 'axios'
-import {toast}from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import axios from "axios";
+import './css/Register.css';
 
-export default function Register() {
-  const navigate=useNavigate()
-  const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: ''
-  })
+const Register = () => {
+    const [data, setData] = useState({
+        firstName: "",
+        lastName: "",
+	
+        email: "",
+        password: "",
+    });
+    const [error, setError] = useState("");
+    const [msg, setMsg] = useState("");
 
+    const handleChange = ({ currentTarget: input }) => {
+        setData({ ...data, [input.name]: input.value });
+    };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const url = "http://localhost:8000/api/users";
+            const { data: res } = await axios.post(url, data);
+            setMsg(res.message);
+        } catch (error) {
+            if (
+                error.response &&
+                error.response.status >= 400 &&
+                error.response.status <= 500
+            ) {
+                setError(error.response.data.message);
+            }
+        }
+    }; 
 
-  const registerUser = async(e) => {
-    e.preventDefault()
-    const {name,email,password}=data
-    try{
-      const {data}=await axios.post('/register',{
-        name,email,password
-      })
-      if(data.error){
-        toast.error(data.error)
-      }
-      else{
-        setData({})
-        toast.success('Login Sucessfull. Welcome!')
-        navigate('/Login')
-      }
-    }catch{
-      console.log(error)
-    }
-  }
+    return (
+        <div >
+            <div className="login-form" >
+                <h1>Welcome</h1>
+            
+			<div className="container">
+           <div className="main">
+                <form className="content" onSubmit={handleSubmit}>
+                    <h1>Create Account</h1>
+                    <input
+                        type="text"
+                        placeholder="First Name"
+                        name="firstName"
+                        onChange={handleChange}
+                        value={data.firstName}
+                        required
+                        className=""
+                    />
+                    <input
+                        type="text"
+                        placeholder="Last Name"
+                        name="lastName"
+                        onChange={handleChange}
+                        value={data.lastName}
+                        required
+                        className=""
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        onChange={handleChange}
+                        value={data.email}
+                        required
+                        className=""
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        onChange={handleChange}
+                        value={data.password}
+                        required
+                        className=""
+                    />
+                    {error && <div className="">{error}</div>}
+                    {msg && <div className="">{msg}</div>}
+                    <button type="submit" className="">
+                        Register
+                    </button>
+                </form>
+            </div>
+			</div>
+			</div>
+			</div>
+        
+    );
+};
 
-  return (
-    <div className="login-form">
-      <div className="container">
-        <h1>Register Account</h1>
-        <div className="main">
-          <div className="content">
-            <form onSubmit={registerUser}>
-              <label>Name</label>
-              <input type='text' placeholder='Enter name...' value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })} required />
-              <label>Email</label>
-              <input type='text' placeholder='Email' value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} required />
-              <label>Password</label>
-              <input type='password' placeholder='Password' value={data.password} onChange={(e) => setData({ ...data, password: e.target.value })} required />
-              <button type='submit'>Register</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  )
-}
+export default Register;
