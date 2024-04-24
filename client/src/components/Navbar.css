@@ -51,3 +51,9 @@
   width: auto; /* Maintain aspect ratio */
   vertical-align: middle; /* Align the logo vertically */
 }
+.logoxx {
+  height: 20px; /* Set height of the logo */
+  width: auto; /* Maintain aspect ratio */
+  display: block; /* Ensure the icon is treated as a block element */
+  margin: 0 auto; /* Center the icon horizontally */
+}

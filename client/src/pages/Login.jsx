@@ -4,40 +4,40 @@ import axios from "axios";
 import './css/Login.css';
 import Cookies from 'js-cookie';
 import { UserContext } from '../../context/userContext';
-
+import eye from '../assets/imgs/eye.png'
+import eye1 from '../assets/imgs/eye1.png'
 const Login = () => {
     const [data, setData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
     const { user, setUser } = useContext(UserContext);
+
     const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
         setError(""); // Clear error when user starts typing
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            Cookies.remove('token')
-          
-            localStorage.removeItem('token')
-           
+            Cookies.remove('token');
+            localStorage.removeItem('token');
             const url = "http://localhost:8000/api/auth";
-            
             const { data: res } = await axios.post(url, data);
-           
             localStorage.setItem("token", res.data);
             axios.get('/profile')
-          .then(({ data }) => {
-            setUser(data);
-            if(data.roll=="admin"){
-                window.location = "/Admin";
-            }
-            else{
-                window.location = "/Chatx";
-            }
-            
-            
-          })
+                .then(({ data }) => {
+                    setUser(data);
+                    if(data.roll === "admin") {
+                        window.location = "/Admin";
+                    } else {
+                        window.location = "/Chatx";
+                    }
+                });
             // Redirect user to dashboard or another page after successful login
         } catch (error) {
             if (
@@ -65,19 +65,25 @@ const Login = () => {
                             onChange={handleChange}
                             value={data.email}
                             required
-                            className=""
                         />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            name="password"
-                            onChange={handleChange}
-                            value={data.password}
-                            required
-                            className=""
-                        />
+                        
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Password"
+                                name="password"
+                                onChange={handleChange}
+                                value={data.password}
+                                required
+                            />
+                            <span
+                                className={`password-toggle ${showPassword ? "show" : ""}`}
+                                onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? <img src={eye} alt="" className='logoxx' /> : <img src={eye1} alt="" className='logoxx' />}
+                            </span>
+                       
                         {error && <div className="error">{error}</div>}
-                        <button type="submit" className="">
+                        <button type="submit">
                             Login
                         </button>
                     </form>
