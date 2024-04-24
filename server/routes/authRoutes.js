@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
-const {  getProfile, getUlists, delUser, upUser,upFile,storagex,getfiles,aiChat } = require('../controllers/authController')
+const {  getProfile, getUlists, delUser, upUser,upFile,storagex,getfiles,aiChat,sendReviewEmail } = require('../controllers/authController')
 
 
 
@@ -13,6 +13,8 @@ router.use(
     })
 )
 router.use("/uploads",express.static('uploads'))
+
+router.post("/send-email",sendReviewEmail)
 
 router.post("/gemini",aiChat)// gemini AI Chatx
 

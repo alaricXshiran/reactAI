@@ -8,6 +8,7 @@ export default function Userdelx() {
   const [users, setUsers] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false); // New state for admin access control
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -57,48 +58,54 @@ export default function Userdelx() {
   // Check if user is not an admin, then navigate to '/Admin'
   useEffect(() => {
     if (user && user.roll !== 'admin') {
-      navigate('/Admin');
+      window.location = "/";
+    } else {
+      setIsAdmin(true);
     }
   }, [user, navigate]);
 
   return (
     <div className="users_container">
-      <button onClick={moveTo}>Back To Admin</button>
-      <h1>Manage Users</h1>
-      <h2>Welcome Admin {user.name}</h2>
-      <input
-        type="text"
-        placeholder="Search users with email..."
-        value={searchQuery}
-        onChange={handleSearchInputChange}
-      />
-      <table className="users_table">
-        <thead>
-          <tr>
-            <th>User ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Timestamp</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredUsers &&
-            filteredUsers.map((user) => (
-              <tr key={user._id}>
-                <td>{user._id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.roll}</td>
-                <td>{new Date(user.createdAt).toLocaleString()}</td>
-                <td>
-                  <button onClick={() => handleClick(user._id)}>DELETE</button>
-                </td>
+      {isAdmin && ( // Render content only if the user is an admin
+        <>
+          <button onClick={moveTo}>Back To Admin</button>
+          <h1>Manage Users</h1>
+          <h2>Welcome Admin {user.firstName}</h2>
+          <input
+            type="text"
+            placeholder="Search users with email..."
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+          />
+          <table className="users_table">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Timestamp</th>
+                <th>Action</th>
               </tr>
-            ))}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {filteredUsers &&
+                filteredUsers.map((user) => (
+                  <tr key={user._id}>
+                    <td>{user._id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.roll}</td>
+                    <td>{new Date(user.createdAt).toLocaleString()}</td>
+                    <td>
+                      <button onClick={() => handleClick(user._id)}>DELETE</button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </div>
   );
 }

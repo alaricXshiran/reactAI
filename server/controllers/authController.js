@@ -6,7 +6,7 @@ const { User } = require("../models/user");
 
 const jwt = require('jsonwebtoken');
 
-
+const sendReview = require("../utils/sendReview");
 require('../models/pdfDetails');
 const pdfSchema = mongoose.model("PdfDetails")
 
@@ -32,6 +32,22 @@ const aiChat = async (req, res) => {
   res.send(text);
 };
 
+
+//send Review Email
+const sendReviewEmail = async (req, res) => {
+    const { email, subject, text } = req.body;
+    try {
+        const result = await sendReview(email, subject, text);
+        if (result.success) {
+            res.status(200).json({ message: result.message });
+        } else {
+            res.status(500).json({ error: result.message });
+        }
+    } catch (error) {
+        console.error("Error sending review email:", error);
+        res.status(500).json({ error: "An error occurred while sending the review email." });
+    }
+};
 
 
 //profile
@@ -166,4 +182,5 @@ module.exports = {
     storagex,
     getfiles,
     aiChat,
+    sendReviewEmail,
 }

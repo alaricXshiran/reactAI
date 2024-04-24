@@ -5,6 +5,7 @@ const cors=require('cors')
 const {mongoose}=require('mongoose')
 const app = express();
 const cookiePraser=require('cookie-parser')
+
 //db connection
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>console.log('Database Connected'))
