@@ -15,6 +15,7 @@ import ReviewForm from './pages/ReviewForm'
 import PdfPage from './pages/PdfPage';
 import VerifyEmail from './pages/VerifyEmail';
 import CodeResponse from './pages/CodeResponse'
+import EditUser from './pages/EditUser';
 import axios from 'axios'
 import { Toaster } from 'react-hot-toast'
 import { UserContextProvider } from '../context/userContext';
@@ -50,6 +51,7 @@ function App() {
         <Route path='/ReviewForm' element={<ReviewForm />} />
         <Route path='/PdfPage' element={<PdfPage />} />
         <Route path="/Chatx" exact element={<Chatx />}/>
+        <Route path="/EditUser" exact element={<EditUser />}/> 
       </Routes>
     </UserContextProvider>
 

@@ -105,20 +105,29 @@ const delUser = async (req, res) => {
 
 //update a user
 const upUser = async (req, res) => {
-    const { id } = req.params
-
-    if (!Mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'User does not Exist' })
+    const userId = req.params.id;
+    const { firstName, lastName, number } = req.body;
+  
+    try {
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Update user properties if they are provided in the request body
+      if (firstName) user.firstName = firstName;
+      if (lastName) user.lastName = lastName;
+      if (number) user.number = number;
+  
+      await user.save();
+  
+      res.json({ message: 'User updated successfully', user });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
     }
-    const updatedUser = await User.findOneAndUpdate({ _id: id }, {
-        ...req.body
-    })
-    if (!updatedUser) {
-        return res.status(400).json({ error: 'No such Users' })
-    }
-
-    res.status(200).json(updatedUser)
-}
+  };
 
 //upload file
 // Multer configuration for file upload

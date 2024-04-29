@@ -36,6 +36,7 @@ export default function Navbar() {
         {isUserSignedIn ? (
           <>
             <li><Link to='/Chatx'>Chat</Link></li>
+            <li><Link to='/EditUser'>Your Account</Link></li>
             <li><Link to='/ReviewForm'>Review</Link></li>
             <li><button onClick={handleSignOut}>LogOut</button></li>
            

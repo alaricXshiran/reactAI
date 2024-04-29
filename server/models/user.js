@@ -14,10 +14,10 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.generateAuthToken = function () {
-	const token = jwt.sign({ email: this.email, firstName: this.firstName,lastName:this.lastName, roll: this.roll,number:this.number }, process.env.JWT_SECRET, {
+	const token = jwt.sign({ _id:this._id,email: this.email, firstName: this.firstName,lastName:this.lastName, roll: this.roll,number:this.number }, process.env.JWT_SECRET, {
 		expiresIn: "7d",
 	});
-	
+	 
 	return token;
 };
 
