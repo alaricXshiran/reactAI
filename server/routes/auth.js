@@ -9,15 +9,14 @@ const cors = require("cors");
 
 // Set up CORS options
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
   credentials: true // Allow credentials
 };
 
 // Apply CORS middleware to the router
 router.use(cors(corsOptions));
 
-router.post("/", async (req, res) => {//login
- 
+router.post("/", async (req, res) => {
   try {
     const { error } = validate(req.body);
     if (error)
@@ -50,10 +49,10 @@ router.post("/", async (req, res) => {//login
         .send({ message: "An Email sent to your account please verify" });
     }
 
-    const token = user.generateAuthToken();
-   
-    res.cookie('token', token).status(200).send({ data: token, message: "logged in successfully" });
+    const authToken = user.generateAuthToken();
+    res.cookie('token', authToken, { secure: true, httpOnly: true }).status(200).send({ data: authToken, message: "logged in successfully" });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 });
