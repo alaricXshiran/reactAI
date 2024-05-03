@@ -1,15 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { UserContext } from '../../context/userContext';
-
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const EditUser = () => {
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     number: ''
   });
+
+  const handleSignOut = () => {
+    Cookies.remove('token');
+    localStorage.removeItem("token");
+    navigate('/Login')
+    window.location.reload();
+  }
 
   useEffect(() => {
     if (user) {
@@ -32,7 +41,8 @@ const EditUser = () => {
 
     try {
       const response = await axios.patch(`http://localhost:8000/up/${user._id}`, formData);
-      console.log(response.data);
+      handleSignOut();
+      
 
     } catch (error) {
       console.error('Error updating user:', error);
@@ -68,6 +78,7 @@ const EditUser = () => {
           Number:
           <input type="text" name="number" value={formData.number} onChange={handleChange} />
         </label>
+        <p>WARNING: You will Be logged  out of your account and will have to login again to see the changed results</p>
         <button type="submit">Update</button>
       </form>
     </div>

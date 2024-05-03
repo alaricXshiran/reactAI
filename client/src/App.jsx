@@ -16,6 +16,7 @@ import PdfPage from './pages/PdfPage';
 import VerifyEmail from './pages/VerifyEmail';
 import CodeResponse from './pages/CodeResponse'
 import EditUser from './pages/EditUser';
+import ForgotPass from './pages/ForgotPass';
 import axios from 'axios'
 import { Toaster } from 'react-hot-toast'
 import { UserContextProvider } from '../context/userContext';
@@ -26,9 +27,6 @@ axios.defaults.withCredentials = true
 
 function App() {
   
-
-  
-
   const user = localStorage.getItem("token");
 
   return (
@@ -41,6 +39,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/Home' element={<Home />} />
         <Route path='/Login' element={<Login />} />
+        <Route path='/ForgotPass' element={<ForgotPass />} />
         <Route path='/Register' element={<Register />} />
         <Route path='/Aboutx' element={<Aboutx />} />
         <Route path='/Admin' element={<Admin />} />
