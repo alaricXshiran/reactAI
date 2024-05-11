@@ -8,8 +8,6 @@ import youtube from '../assets/imgs/youtube.png'
 import instagram from '../assets/imgs/instagram.png'
 import Cookies from 'js-cookie';
 
-
-
 export default function Navbar() {
   
   const isUserSignedIn = !!localStorage.getItem('token')
@@ -36,6 +34,7 @@ export default function Navbar() {
         {isUserSignedIn ? (
           <>
             <li><Link to='/Chatx'>Chat</Link></li>
+            <li><Link to='/UserSubscribe'>Subscribe</Link></li>
             <li><Link to='/EditUser'>Your Account</Link></li>
             <li><Link to='/ReviewForm'>Review</Link></li>
             <li><button onClick={handleSignOut}>LogOut</button></li>

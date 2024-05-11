@@ -31,22 +31,25 @@ export default function ReviewForm() {
     }
   };
 
-
+  if (!user) {
+    return <div>Loading...</div>;
+}
   return (
     <div className="chat_container">
       {user && (
-        <div>
+        <div >
           
-          <h2>Welcome To REWIEW Help us make this better {user.name}</h2>
+          <h2>Welcome To REVIEW help us get better {user.name}</h2>
           <h3>Email: {user.email}</h3>
           <h4>RANK: {user.roll}</h4>
 
-          <div>
-      <h1>Tell Us What You Think To Improve</h1>
-      <form onSubmit={handleSubmit} className='mail-form'>
+          <div className="container">
+      <h1>Tell Us What You Think We Should Improve and What You Don't Like</h1>
+      <form onSubmit={handleSubmit} >
         <input type="email" value={"lawproject.srilanka@gmail.com"} onChange={(e) => setEmail(e.target.value)} required hidden/>
         <input type="text" value={"Review comment"} onChange={(e) => setSubject(e.target.value)} required hidden/>
-        <label>REVIEW:</label>
+
+       
         <textarea value={message}  placeholder="Write Your Review here..." onChange={(e) => setMessage(e.target.value)} required />
         <button type="submit">Send Review</button>
       </form>

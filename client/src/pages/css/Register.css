@@ -45,7 +45,7 @@
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
-    border: 1px solid #b3b3b3; /* Light gray border */
+    border: 1px solid #3f3f3f; /* Light gray border */
   }
   
   button {
@@ -53,7 +53,7 @@
     border: none;
     border-radius: 5px;
     background-color: #8a4fff; /* Purple button color */
-    color: #2c2c2c9b;
+    color: #272727;
     cursor: pointer;
   }
   

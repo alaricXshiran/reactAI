@@ -14,22 +14,26 @@ const pdfSchema = mongoose.model("PdfDetails")
 
 // gemini AI part
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEN_AI_KEY);
 
 const aiChat = async (req, res) => {
-        const { history, message } = req.body;
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
- 
- 
-  const chat = model.startChat({
-    history: req.body.history,
-  });
-  const msg = req.body.message;
+  try {
+    const { history, message } = req.body;
 
-  const result = await chat.sendMessage(msg);
-  const response = await result.response;
-  const text =  response.text();
-  res.send(text);
+    // Get the Generative AI model
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const chat = model.startChat({
+      history: history,
+    });
+    const result = await chat.sendMessage(message);
+    const response = await result.response;
+    const text = await response.text();
+    res.send(text);
+  } catch (error) {
+    console.error("An error occurred during AI chat:", error);
+    res.status(500).send("An error occurred during AI chat");
+  }
 };
 
 
@@ -106,7 +110,7 @@ const delUser = async (req, res) => {
 //update a user
 const upUser = async (req, res) => {
     const userId = req.params.id;
-    const { firstName, lastName, number } = req.body;
+    const { firstName, lastName, number,subscribe } = req.body;
   
     try {
       const user = await User.findById(userId);
@@ -119,6 +123,7 @@ const upUser = async (req, res) => {
       if (firstName) user.firstName = firstName;
       if (lastName) user.lastName = lastName;
       if (number) user.number = number;
+      if (subscribe) user.subscribe = subscribe;
   
       await user.save();
   

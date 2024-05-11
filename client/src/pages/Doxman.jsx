@@ -103,7 +103,9 @@ export default function Doxman() {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-
+  if (!user) {
+    return <div>Loading...</div>;
+}
   return (
     <div>
       <div className="chat_container">

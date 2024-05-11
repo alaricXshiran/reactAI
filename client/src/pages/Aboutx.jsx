@@ -22,7 +22,7 @@ const About = () => {
                 </section>
             </main>
             <footer>
-                <p>&copy; 2024 Alaric Fashion. All rights reserved.</p>
+                <p>&copy; 2024 Alaric Fashion. All rights reserved.  powered by Google Gemini </p>
             </footer>
         </div>
     );

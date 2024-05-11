@@ -17,6 +17,9 @@ import VerifyEmail from './pages/VerifyEmail';
 import CodeResponse from './pages/CodeResponse'
 import EditUser from './pages/EditUser';
 import ForgotPass from './pages/ForgotPass';
+import UserSubscribe from './pages/UserSubscribe';
+import ResetPass from './pages/ResetPass';
+
 import axios from 'axios'
 import { Toaster } from 'react-hot-toast'
 import { UserContextProvider } from '../context/userContext';
@@ -44,8 +47,9 @@ function App() {
         <Route path='/Aboutx' element={<Aboutx />} />
         <Route path='/Admin' element={<Admin />} />
         <Route path='/CodeResponse' element={<CodeResponse />} />
-        
+        <Route path='/UserSubscribe' element={<UserSubscribe />} />
         <Route path='/Userdelx' element={<Userdelx />} />
+        <Route path='/ResetPass' element={<ResetPass/>} />
         <Route path='/Doxman' element={<Doxman />} />
         <Route path='/ReviewForm' element={<ReviewForm />} />
         <Route path='/PdfPage' element={<PdfPage />} />

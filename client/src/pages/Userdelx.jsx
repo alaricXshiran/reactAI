@@ -7,8 +7,10 @@ export default function Userdelx() {
   const { user } = useContext(UserContext);
   const [users, setUsers] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [confirmDeleteUser, setConfirmDeleteUser] = useState(null); // Track user to be deleted
+
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false); // New state for admin access control
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -16,7 +18,9 @@ export default function Userdelx() {
         const response = await fetch('http://localhost:8000/ulists/');
         const json = await response.json();
         if (response.ok) {
+         
           setUsers(json);
+         
         } else {
           throw new Error('Failed to fetch users');
         }
@@ -37,14 +41,19 @@ export default function Userdelx() {
 
   const filteredUsers = users && users.filter(user => user.email.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  const handleClick = async (userId) => {
+  const handleClick = (userId) => {
+    // Open the confirmation dialog before deleting
+    setConfirmDeleteUser(userId);
+  };
+
+  const handleDeleteConfirmation = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/del/${userId}`, {
+      const response = await fetch(`http://localhost:8000/del/${confirmDeleteUser}`, {
         method: 'DELETE'
       });
       if (response.ok) {
         console.log('User deleted successfully');
-        setUsers(users.filter(user => user._id !== userId));
+        setUsers(users.filter(user => user._id !== confirmDeleteUser));
       } else {
         console.error(`Failed to delete user. Status: ${response.status}`);
         const errorMessage = await response.text();
@@ -53,9 +62,15 @@ export default function Userdelx() {
     } catch (error) {
       console.error('An error occurred:', error);
     }
+    // Close the confirmation dialog after deletion
+    setConfirmDeleteUser(null);
   };
 
-  // Check if user is not an admin, then navigate to '/Admin'
+  const handleCancelDelete = () => {
+    // Close the confirmation dialog without deleting
+    setConfirmDeleteUser(null);
+  };
+
   useEffect(() => {
     if (user && user.roll !== 'admin') {
       window.location = "/";
@@ -63,28 +78,40 @@ export default function Userdelx() {
       setIsAdmin(true);
     }
   }, [user, navigate]);
-
+  
+  if (!user) {
+    return <div>Loading...</div>;
+}
   return (
     <div className="users_container">
-      {isAdmin && ( // Render content only if the user is an admin
+      {isAdmin && (
         <>
           <button onClick={moveTo}>Back To Admin</button>
           <h1>Manage Users</h1>
-          <h2>Welcome Admin {user.firstName}</h2>
+          <h2>Welcome Admin {user && user.firstName}</h2> {/* Check if user is not null */}
           <input
             type="text"
             placeholder="Search users with email..."
             value={searchQuery}
             onChange={handleSearchInputChange}
           />
+          {/* Confirmation dialog */}
+          {confirmDeleteUser && (
+            <div className="delete-confirmation">
+              <p>Are you sure you want to delete this user?</p>
+              <button onClick={handleDeleteConfirmation}>Yes</button>
+              <button onClick={handleCancelDelete}>No</button>
+            </div>
+          )}
           <table className="users_table">
             <thead>
               <tr>
                 <th>User ID</th>
-                <th>Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>Email</th>
+                <th>Subscribe</th>
                 <th>Role</th>
-                <th>Timestamp</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -93,10 +120,11 @@ export default function Userdelx() {
                 filteredUsers.map((user) => (
                   <tr key={user._id}>
                     <td>{user._id}</td>
-                    <td>{user.name}</td>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
                     <td>{user.email}</td>
+                    <td>{user.subscribe ? "Yes" : "No"}</td>
                     <td>{user.roll}</td>
-                    <td>{new Date(user.createdAt).toLocaleString()}</td>
                     <td>
                       <button onClick={() => handleClick(user._id)}>DELETE</button>
                     </td>
@@ -104,6 +132,7 @@ export default function Userdelx() {
                 ))}
             </tbody>
           </table>
+
         </>
       )}
     </div>

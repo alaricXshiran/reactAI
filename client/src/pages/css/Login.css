@@ -6,11 +6,11 @@
   }
   
   .container {
-    background-color: #686868; /* Light gray background */
+    background-color: #a3a3a3; /* Light gray background */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(71, 70, 70, 0.945);
-    border: 2px solid #464545; /* Purple border */
+    border: 2px solid #222222; /* Purple border */
   }
   
   h1 {
@@ -40,16 +40,8 @@
     border-radius: 5px;
     border: 1px solid #0a83ee; /* Light gray border */
   }
-  
-  button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #8a4fff; /* Purple button color */
-    color: #020202;
-    cursor: pointer;
-  }
-  
+
+ 
   button:hover {
     background-color: #31ee96; /* Darker purple on hover */
   }

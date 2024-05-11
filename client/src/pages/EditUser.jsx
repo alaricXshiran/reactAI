@@ -50,37 +50,58 @@ const EditUser = () => {
     }
   };
 
+  const moveTo2 = () => {
+    navigate('/ResetPass');
+  };
+
   if (!user) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="users_container">
-      <h1>Welcome {user.firstName} to Update Accounts</h1>
+
+       <div className="login-form">
+           <h1>Welcome {user.firstName} to Update Accounts</h1>
+        
+                 
+                   
+                      
+                   
+          
+            <div className="container">
+                <div className="main">
+   
       <form onSubmit={handleSubmit}>
-        <label>
+        
+        
           Account ID:
           <input type="text" value={user._id} name="_id" disabled />
-        </label>
-        <label>
+   
+ 
           Email:
           <input type="email" name="email" value={user.email} disabled />
-        </label>
-        <label>
+    
+       
           First Name:
           <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
-        </label>
-        <label>
+     
+       
           Last Name:
           <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
-        </label>
-        <label>
+     
+       
           Number:
           <input type="text" name="number" value={formData.number} onChange={handleChange} />
-        </label>
-        <p>WARNING: You will Be logged  out of your account and will have to login again to see the changed results</p>
-        <button type="submit">Update</button>
+
+          <p>Subscribe Status: {user.subscribe ? 'Yes' : 'No'}</p>
+          <button type="submit">Update</button>
+        <p>WARNING: You will Be logged  out of your account and will have to login again</p>
+        
+        
       </form>
+      <button onClick={moveTo2}>I want to Change My Password</button>
+      </div>
+      </div>
     </div>
   );
 };
