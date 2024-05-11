@@ -51,7 +51,7 @@ const EditUser = () => {
   };
 
   const moveTo2 = () => {
-    navigate('/ResetPass');
+    navigate('/ForgotPass');
   };
 
   if (!user) {
@@ -99,8 +99,11 @@ const EditUser = () => {
         
         
       </form>
-      <button onClick={moveTo2}>I want to Change My Password</button>
+  
       </div>
+      </div>
+      <div>
+      <button onClick={moveTo2}>I want to Change My Password</button>
       </div>
     </div>
   );

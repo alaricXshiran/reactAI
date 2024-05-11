@@ -1,5 +1,6 @@
 
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import './css/Login.css';
 import Cookies from 'js-cookie';
@@ -11,6 +12,7 @@ const Login = () => {
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
     const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
@@ -52,6 +54,9 @@ const Login = () => {
         }
     };
 
+    const moveTo1 = () => {
+        navigate('/ForgotPass');
+      };
     return (
         <div className="login-form">
             <div className="container">
@@ -75,18 +80,21 @@ const Login = () => {
                                 value={data.password}
                                 required
                             />
+                            
                             <span
                                 className={`password-toggle ${showPassword ? "show" : ""}`}
                                 onClick={togglePasswordVisibility}
                             >
                               {showPassword ? <img src={eye} alt="" className='logoxx' /> : <img src={eye1} alt="" className='logoxx' />}
                             </span>
-                       
+                            
                         {error && <div className="error">{error}</div>}
                         <button type="submit">
                             Login
                         </button>
+                        <label onClick={moveTo1}>Forgot Password ?</label>
                     </form>
+                    
                 </div>
             </div>
         </div>

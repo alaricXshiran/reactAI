@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
-const {  getProfile, getUlists, delUser, upUser,upFile,storagex,getfiles,aiChat,sendReviewEmail } = require('../controllers/authController')
-
+const {  getProfile, getUlists, delUser, upUser,upFile,storagex,getfiles,aiChat,sendReviewEmail, } = require('../controllers/authController')
+const{forgotPass, resetPass}=require('../utils/resetMail')
 
 
 // middleware
@@ -29,5 +29,9 @@ router.patch('/up/:id', upUser)//Update a user
 router.post('/upload', storagex,upFile); // Upload single file
 
 router.get('/getfiles',getfiles);
+
+router.post("/forgot-password",forgotPass)
+
+router.post("/reset-password/:id/:token",resetPass)
 
 module.exports = router

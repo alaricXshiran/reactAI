@@ -38,6 +38,7 @@ function App() {
       <Toaster position='bottom-right' toastOptions={{ duration: 2000 }} />
       <Routes>
       <Route path="/users/:id/verify/:token" element={<VerifyEmail/>} />
+      <Route path="/reset_password/:id/:token" element={<ResetPass />}/>
       {user && <Route path="/Chatx" exact element={<Chatx />} />}
         <Route path='/' element={<Home />} />
         <Route path='/Home' element={<Home />} />
@@ -49,7 +50,7 @@ function App() {
         <Route path='/CodeResponse' element={<CodeResponse />} />
         <Route path='/UserSubscribe' element={<UserSubscribe />} />
         <Route path='/Userdelx' element={<Userdelx />} />
-        <Route path='/ResetPass' element={<ResetPass/>} />
+        
         <Route path='/Doxman' element={<Doxman />} />
         <Route path='/ReviewForm' element={<ReviewForm />} />
         <Route path='/PdfPage' element={<PdfPage />} />

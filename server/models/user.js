@@ -33,6 +33,7 @@ userSchema.methods.generateAuthToken = function () {
 	  subscribeStartDate:this.subscribeStartDate,
 	  wishes:this.wishes,
     subscribeStartDate:this.subscribeStartDate,
+    password:this.password,
     },
     process.env.JWT_SECRET,
     {
