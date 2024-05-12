@@ -19,7 +19,7 @@ import EditUser from './pages/EditUser';
 import ForgotPass from './pages/ForgotPass';
 import UserSubscribe from './pages/UserSubscribe';
 import ResetPass from './pages/ResetPass';
-
+import SubscriptionPage from './pages/SubscriptionPage'
 import axios from 'axios'
 import { Toaster } from 'react-hot-toast'
 import { UserContextProvider } from '../context/userContext';
@@ -31,6 +31,8 @@ axios.defaults.withCredentials = true
 function App() {
   
   const user = localStorage.getItem("token");
+
+
 
   return (
     <UserContextProvider>
@@ -50,6 +52,7 @@ function App() {
         <Route path='/CodeResponse' element={<CodeResponse />} />
         <Route path='/UserSubscribe' element={<UserSubscribe />} />
         <Route path='/Userdelx' element={<Userdelx />} />
+        <Route path='/SubscriptionPage' element={<SubscriptionPage />} />
         
         <Route path='/Doxman' element={<Doxman />} />
         <Route path='/ReviewForm' element={<ReviewForm />} />

@@ -71,10 +71,11 @@ const UserSubscribe = () => {
             // Set subscribe value to "1" and update subscribeStartDate to current date
             const currentDate = new Date().toISOString(); 
             const updatedFormData = { ...formData, subscribe: "1", subscribeStartDate: currentDate };
-        
+            
             const response = await axios.patch(`http://localhost:8000/up/${user._id}`, updatedFormData);
+            window.location.href = "https://sandbox.payhere.lk/pay/o850804a8";
     
-            handleSignOut();
+            
         } catch (error) {
             console.error('Error updating user:', error);
         }
@@ -111,12 +112,17 @@ const UserSubscribe = () => {
 
                         <button type="submit">Subscribe</button>
 
+
                         <p>WARNING: You will be logged out of your account and will have to login again to see the changed results</p>
                     </form>
                 </div>
             </div>
+          
         </div>
     );
 };
 
+
+
 export default UserSubscribe;
+

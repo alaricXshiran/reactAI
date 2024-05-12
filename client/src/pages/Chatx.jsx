@@ -1,15 +1,43 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { UserContext } from '../../context/userContext';
 import ReactMarkdown from "react-markdown";
 import Prism from "prismjs";
 import './css/Chatx.css';
 
 const Chatx = () => {
+  const { user } = useContext(UserContext);
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [initialMessageSent, setInitialMessageSent] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // New loading state
+  const [isLoading, setIsLoading] = useState(false);
+  const [wishCount, setWishCount] = useState(0); // State to hold wish count
   const textareaRef = useRef(null);
+  const ws = useRef(null); // WebSocket reference
+
+  // Function to fetch wish count from the backend
+  const fetchWishCount = async () => {
+    try {
+      if (!user || !user._id) {
+        throw new Error("User ID not available");
+      }
+      const response = await fetch(`http://localhost:8000/wishcount/${user._id}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch wish count");
+      }
+      const data = await response.json();
+      setWishCount(data.wishCount);
+    } catch (error) {
+      console.error(error);
+      setError("Failed to fetch wish count.");
+    }
+  };
+
+  useEffect(() => {
+    if (user && user._id) {
+      fetchWishCount(); // Fetch wish count when the component mounts
+    }
+  }, [user]); // Add user to the dependency array
 
   function autoResizeInput() {
     textareaRef.current.style.height = "auto";
@@ -17,12 +45,16 @@ const Chatx = () => {
   }
 
   const getResponse = async () => {
-    if (!value) {
+    if (!value.trim()) {
       setError("Please enter a question");
       return;
     }
     try {
-      setIsLoading(true); // Set loading to true before making the request
+      setIsLoading(true);
+  
+      // Decrease wish count by 1 in the UI
+      setWishCount(prevCount => prevCount - 1);
+  
       const options = {
         method: "POST",
         body: JSON.stringify({
@@ -35,29 +67,23 @@ const Chatx = () => {
       };
       const response = await fetch("http://localhost:8000/gemini", options);
       const data = await response.text();
-
-      let formattedResponse = "";
-
-      if (data.startsWith("**")) {
-        formattedResponse = data;
-      } else {
-        formattedResponse = `**Bot:** ${data}`;
-      }
-
+  
+      let formattedResponse = data.startsWith("**") ? data : `**Bot:** ${data}`;
+  
       const formattedUserMessage = `**You:** ${value}`;
-
+  
       setChatHistory((oldChatHistory) => [
         ...oldChatHistory,
         {
           role: "user",
-          parts: [{text: formattedUserMessage }],
+          parts: [{ text: formattedUserMessage }],
         },
         {
           role: "model",
           parts: [{ text: formattedResponse }],
         },
       ]);
-
+  
       setValue("");
       setError("");
       textareaRef.current.style.height = "auto";
@@ -65,15 +91,16 @@ const Chatx = () => {
       console.error(error);
       setError("Something went wrong. Please try again later.");
     } finally {
-      setIsLoading(false); // Set loading to false after the request completes
+      setIsLoading(false);
     }
   };
-
+  
   const clear = () => {
     setChatHistory([]);
     setValue("");
     setError("");
     textareaRef.current.style.height = "auto";
+    
   };
 
   useEffect(() => {
@@ -81,7 +108,7 @@ const Chatx = () => {
 
     const sendInitialRequest = async () => {
       try {
-        setIsLoading(true); // Set loading to true before making the initial request
+        setIsLoading(true);
         const options = {
           method: "POST",
           body: JSON.stringify({
@@ -112,7 +139,8 @@ const Chatx = () => {
         console.error(error);
         setError("Something went wrong while sending the initial message.");
       } finally {
-        setIsLoading(false); // Set loading to false after the initial request completes
+        setIsLoading(false);
+        
       }
     };
 
@@ -126,6 +154,7 @@ const Chatx = () => {
   return (
     <div className="app">
       <div className="chat-container">
+        <h3>Wish Count: {wishCount}</h3>
         <div className="chat-history">
           {initialMessageSent && chatHistory.slice(2).map((chatItem, index) => (
             <div key={index}>
@@ -147,9 +176,9 @@ const Chatx = () => {
               autoResizeInput();
             }}
           />
-          {!isLoading && !error && <button onClick={getResponse}>Ask me</button>} {/* Check isLoading and error states before showing the button */}
+          {!isLoading && !error && wishCount > 0 && <button onClick={getResponse}>Ask me</button>}
           {!isLoading && error && <button onClick={clear}>Clear</button>}
-          {isLoading && <div className="loading-indicator">Loading...</div>} {/* Show loading indicator when isLoading is true */}
+          {isLoading && <div className="loading-indicator">Loading...</div>}
         </div>
         {error && <p className="error">{error}</p>}
       </div>
